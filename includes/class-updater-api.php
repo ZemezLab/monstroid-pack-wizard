@@ -50,9 +50,9 @@ if ( ! class_exists( 'MPack_Wizard_Updater_API' ) ) {
 		 * @var string
 		 */
 		protected $endpoints = array(
-			'get'    => 'http://jetelements.zemez.io/monstroid/?order_id=%oid%&template_id=%tid%&action=get_theme',
-			'verify' => 'http://jetelements.zemez.io/monstroid/?order_id=%oid%&template_id=%tid%&action=validate_order',
-			'themes' => 'http://jetelements.zemez.io/monstroid/themes-list.json',
+			'get'    => 'http://monstroid.cherryframework.com/?order_id=%oid%&template_id=%tid%&action=get_theme',
+			'verify' => 'http://monstroid.cherryframework.com/?order_id=%oid%&template_id=%tid%&action=validate_order',
+			'themes' => 'http://monstroid.cherryframework.com/themes-list.json',
 		);
 
 		/**

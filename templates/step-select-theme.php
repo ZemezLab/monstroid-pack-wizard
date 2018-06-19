@@ -28,7 +28,7 @@
 						<a href="<?php mpack_interface()->install_theme_link( $theme['slug'] ); ?>" class="mpack-btn btn-primary"><?php
 							esc_html_e( 'Install', 'monstroid-pack-wizard' );
 						?></a>
-						<a href="<?php echo $theme['url']; ?>" class="mpack-btn btn-default" target="_blank"><?php
+						<a href="<?php echo $theme['demo']; ?>" class="mpack-btn btn-default" target="_blank"><?php
 							esc_html_e( 'Live Demo', 'monstroid-pack-wizard' );
 						?></a>
 					</div>

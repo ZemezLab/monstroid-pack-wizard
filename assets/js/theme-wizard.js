@@ -82,6 +82,7 @@
 		doRecursiveAjax: function( $this, data ) {
 
 			data.nonce = settings.nonce;
+			data.theme = settings.theme;
 
 			$.ajax({
 				url: ajaxurl,

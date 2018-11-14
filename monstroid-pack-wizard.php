@@ -5,7 +5,7 @@ Plugin URI:
 Description: Monstroid package installation wizard.
 Author: Zemez
 Author URI:
-Version: 1.0.0
+Version: 1.1.0
 Text Domain: monstroid-pack-wizard
 Domain Path: languages/
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -62,7 +62,7 @@ if ( ! class_exists( 'MPack_Wizard' ) ) {
 		 *
 		 * @var string
 		 */
-		public $version = '1.0.0';
+		public $version = '1.1.0';
 
 		/**
 		 * Plugin files list

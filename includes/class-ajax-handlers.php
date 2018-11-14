@@ -218,6 +218,16 @@ if ( ! class_exists( 'MPack_Wizard_Ajax_Handlers' ) ) {
 
 			$result = $api->do_theme_install();
 
+			$theme = isset( $_REQUEST['theme'] ) ? $_REQUEST['theme'] : false;
+
+			if ( $theme ) {
+
+				$this->store_theme_data( array(
+					'TextDomain' => $theme,
+					'ThemeName'  => $this->get_theme_name( $theme ),
+				) );
+			}
+
 			if ( true !== $result['success'] ) {
 				wp_send_json_error( array(
 					'message' => $result['message'],
@@ -236,6 +246,29 @@ if ( ! class_exists( 'MPack_Wizard_Ajax_Handlers' ) ) {
 					'action' => 'mpack_wizard_activate_parent',
 				),
 			) );
+		}
+
+		/**
+		 * Returns theme name by slug
+		 *
+		 * @param  [type] $theme [description]
+		 * @return [type]        [description]
+		 */
+		public function get_theme_name( $theme ) {
+
+			mpack_wizard()->dependencies( array( 'updater-api' ) );
+
+			$api    = mpack_wizard_updater_api();
+			$themes = $api->get_themes_list();
+
+			foreach ( $themes as $theme_data ) {
+				if ( $theme_data['slug'] === $theme ) {
+					return $theme_data['name'];
+				}
+			}
+
+			return false;
+
 		}
 
 		/**

@@ -71,7 +71,16 @@ if ( ! class_exists( 'MPack_Wizard_Updater_API' ) ) {
 		 * @return array
 		 */
 		public function get_themes_list() {
-			return $this->api_call( 'themes' );
+
+			$transient = 'mpack_themes';
+			$themes    = get_transient( $transient );
+
+			if ( ! $themes ) {
+				$themes = $this->api_call( 'themes' );
+				set_transient( $transient, $themes, HOUR_IN_SECONDS );
+			}
+
+			return $themes;
 		}
 
 		/**

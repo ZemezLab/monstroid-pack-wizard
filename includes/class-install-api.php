@@ -84,6 +84,28 @@ if ( ! class_exists( 'MPack_Wizard_Install_API' ) ) {
 					$message = $skin->result->get_error_message();
 					$success = false;
 				} else {
+
+					global $wp_filesystem;
+
+					$theme_dir = $skin->result->error_data['folder_exists'];
+
+					$source_files = array_keys( $wp_filesystem->dirlist( $theme_dir ) );
+					$css_key      = array_search( 'style.css', $source_files );
+
+					if ( false !== $css_key ) {
+						$css_path = $theme_dir . '/' . $source_files[ $css_key ];
+
+						$theme_data = get_file_data( $css_path, array(
+							'TextDomain' => 'Text Domain',
+							'ThemeName'  => 'Theme Name',
+						), 'theme' );
+
+						if ( $theme_data ) {
+							do_action( 'mpack-wizard/source-rename-done', $theme_data );
+						}
+
+					}
+
 					$message = esc_html__( 'The theme has been already installed. Activating...', 'monstroid-pack-wizard' );
 				}
 
@@ -313,7 +335,7 @@ if ( ! class_exists( 'MPack_Wizard_Install_API' ) ) {
 				return $source;
 			}
 
-			$css_key  = array_search( 'style.css', $source_files );
+			$css_key = array_search( 'style.css', $source_files );
 
 			if ( false === $css_key ) {
 				return $source;
@@ -338,15 +360,13 @@ if ( ! class_exists( 'MPack_Wizard_Install_API' ) ) {
 			$from_path  = untrailingslashit( $source );
 			$to_path    = untrailingslashit( str_replace( basename( $remote_source ), $theme_name, $remote_source ) );
 
+			/**
+			 * Fires before returns result.
+			 */
+			do_action( 'mpack-wizard/source-rename-done', $theme_data );
+
 			if ( true === $wp_filesystem->move( $from_path, $to_path ) ) {
-
-				/**
-				 * Fires after reanming before returns result.
-				 */
-				do_action( 'mpack-wizard/source-rename-done', $theme_data );
-
 				return trailingslashit( $to_path );
-
 			} else {
 
 				return new WP_Error(
